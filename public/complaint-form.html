@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Traffic Issues</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    textarea {
+      height: 120px;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    .success {
+      background: #d5f5e3;
+      color: #27ae60;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Report Traffic Issues</h1>
+    
+    <div id="success-message" class="success" style="display: none;">
+      Your complaint has been submitted successfully!
+    </div>
+
+    <form id="complaint-form">
+      <div class="form-group">
+        <label for="location">Location*</label>
+        <input type="text" id="location" name="location" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="issue-type">Issue Type*</label>
+        <select id="issue-type" name="issue-type" required>
+          <option value="">Select issue type</option>
+          <option value="congestion">Traffic Congestion</option>
+          <option value="accident">Accident</option>
+          <option value="signal">Malfunctioning Signal</option>
+          <option value="road">Road Damage</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Description*</label>
+        <textarea id="description" name="description" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="contact">Contact Email (optional)</label>
+        <input type="email" id="contact" name="contact">
+      </div>
+      
+      <button type="submit">Submit Complaint</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('complaint-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simulate form submission
+      setTimeout(() => {
+        document.getElementById('success-message').style.display = 'block';
+        document.getElementById('complaint-form').reset();
+        
+        // Scroll to success message
+        document.getElementById('success-message').scrollIntoView({
+          behavior: 'smooth'
+        });
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

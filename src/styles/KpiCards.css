@@ -1,0 +1,51 @@
+.kpi-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.kpi-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.kpi-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.kpi-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+}
+
+.kpi-value .target {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #7f8c8d;
+}
+
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  margin-top: 0.5rem;
+}
+
+.progress-bar.good {
+  background-color: #2ecc71;
+}
+
+.progress-bar.warning {
+  background-color: #f39c12;
+}
+
+.progress-bar.bad {
+  background-color: #e74c3c;
+}
