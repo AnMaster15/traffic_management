@@ -67,7 +67,7 @@ const Dashboard = () => {
       <header className="dashboard-header">
         <h1>Smart Traffic Management Dashboard</h1>
         <div className="header-info">
-          <span>Last updated: {new Date().toLocaleTimeString()}</span>
+          <span>Last updated: {new Date().toLocaleTimeString()} </span>
           <span>System status: <span className="status-active">Operational</span></span>
         </div>
       </header>
