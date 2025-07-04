@@ -10,6 +10,21 @@ const Controls = ({ onAdjustLights }) => {
   });
   const [isActive, setIsActive] = useState(false);
 
+  // Track the current status for each intersection
+  const [statusMap, setStatusMap] = useState({
+    'main-1st': 'auto',
+    'central-square': 'auto',
+    'north-junction': 'manual',
+    'river-crossing': 'emergency'
+  });
+
+  const intersectionNames = {
+    'main-1st': 'Main St & 1st Ave',
+    'central-square': 'Central Square',
+    'north-junction': 'North Junction',
+    'river-crossing': 'River Crossing'
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setControlParams(prev => ({
@@ -21,16 +36,30 @@ const Controls = ({ onAdjustLights }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsActive(true);
-    onAdjustLights(controlParams);
-    
-    // Reset after 5 seconds
-    setTimeout(() => setIsActive(false), 5000);
+
+    // Update status map dynamically
+    const newStatusMap = { ...statusMap };
+    const { intersection, mode, emergency } = controlParams;
+
+    if (intersection) {
+      if (emergency) {
+        newStatusMap[intersection] = 'emergency';
+      } else {
+        newStatusMap[intersection] = mode;
+      }
+      setStatusMap(newStatusMap);
+    }
+
+    // onAdjustLights(controlParams); // You can uncomment if needed.
+
+    // Reset active status after 3 seconds
+    setTimeout(() => setIsActive(false), 3000);
   };
 
   return (
     <div className="controls-container">
       <h2 className="section-title">Traffic Light Controls</h2>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="intersection">Intersection</label>
@@ -48,7 +77,7 @@ const Controls = ({ onAdjustLights }) => {
             <option value="river-crossing">River Crossing</option>
           </select>
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="mode">Control Mode</label>
           <select
@@ -63,7 +92,7 @@ const Controls = ({ onAdjustLights }) => {
             <option value="manual">Manual Override</option>
           </select>
         </div>
-        
+
         {controlParams.mode === 'timed' && (
           <div className="form-group">
             <label htmlFor="duration">Green Light Duration (sec)</label>
@@ -80,7 +109,7 @@ const Controls = ({ onAdjustLights }) => {
             <span className="duration-value">{controlParams.duration} seconds</span>
           </div>
         )}
-        
+
         <div className="form-group checkbox-group">
           <input
             type="checkbox"
@@ -91,10 +120,10 @@ const Controls = ({ onAdjustLights }) => {
           />
           <label htmlFor="emergency">Emergency Vehicle Priority</label>
         </div>
-        
+
         <div className="control-actions">
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={isActive ? 'active' : ''}
             disabled={isActive}
           >
@@ -102,30 +131,36 @@ const Controls = ({ onAdjustLights }) => {
           </button>
         </div>
       </form>
-      
+
       <div className="control-status">
         <h3>Current Status</h3>
         <ul>
-          <li>
-            <span className="status-label">Main St & 1st Ave:</span>
-            <span className="status-value auto">Automatic</span>
-          </li>
-          <li>
-            <span className="status-label">Central Square:</span>
-            <span className="status-value auto">Automatic</span>
-          </li>
-          <li>
-            <span className="status-label">North Junction:</span>
-            <span className="status-value manual">Manual Override</span>
-          </li>
-          <li>
-            <span className="status-label">River Crossing:</span>
-            <span className="status-value emergency">Emergency Mode</span>
-          </li>
+          {Object.entries(statusMap).map(([intersectionKey, status]) => (
+            <li key={intersectionKey}>
+              <span className="status-label">{intersectionNames[intersectionKey]}:</span>
+              <span className={`status-value ${status}`}>{formatStatus(status)}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   );
+};
+
+// Utility to format status for display
+const formatStatus = (status) => {
+  switch (status) {
+    case 'auto':
+      return 'Automatic';
+    case 'manual':
+      return 'Manual Override';
+    case 'timed':
+      return 'Timed Sequence';
+    case 'emergency':
+      return 'Emergency Mode';
+    default:
+      return status;
+  }
 };
 
 export default Controls;
